@@ -2,6 +2,7 @@
   import supabase from '$lib/db.js'
   import Header from '$lib/Header.svelte'
   import Todos from '$lib/Todos.svelte'
+  import Error from '$lib/Error.svelte'
 
   let todos = []
   let errorMsg = ''
@@ -19,7 +20,7 @@
 
 <main use:loadTodos>
   {#if errorMsg}
-    <p>{errorMsg}</p>
+    <Error {errorMsg} />
   {/if}
 
   {#if !errorMsg}
@@ -34,8 +35,5 @@
     border-radius: 0.25em;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     text-align: center;
-  }
-  p {
-    color: red;
   }
 </style>
