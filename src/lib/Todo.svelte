@@ -1,7 +1,7 @@
 <script>
   export let todo = {}
 
-  let { task, isComplete } = todo
+  const { task, isComplete } = todo
 </script>
 
 <div>

@@ -1,15 +1,18 @@
 <script>
   import Spinner from '$lib/Spinner.svelte'
   import Todo from '$lib/Todo.svelte'
+
   export let todos = []
+
+  $: isTodos = todos.length !== 0
 </script>
 
 <section>
-  {#if todos.length === 0}
+  {#if !isTodos}
     <Spinner />
   {/if}
 
-  {#if todos.length !== 0}
+  {#if isTodos}
     {#each todos as todo}
       <Todo {todo} />
     {/each}
