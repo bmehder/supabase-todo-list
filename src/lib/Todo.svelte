@@ -5,20 +5,29 @@
 
   const { task, isComplete } = todo
 
-  const updateTodo = getContext('update')
+  const updateTodo = getContext('updateTodo')
+  const updateChecked = getContext('updateChecked')
+  const deleteTodo = getContext('deleteTodo')
+
+  const handleInput = e => {
+    todo.task = e.currentTarget.value
+    updateTodo(todo)
+  }
+
+  const handleCheckbox = e => {
+    todo.isComplete = e.currentTarget.checked ? true : false
+    updateChecked(todo)
+  }
+
+  const handleDelete = e => {
+    deleteTodo(todo)
+  }
 </script>
 
 <div>
-  <input type="checkbox" checked={isComplete} />
-  <input
-    type="text"
-    value={task}
-    on:input={e => {
-      todo.task = e.currentTarget.value
-      updateTodo(todo)
-    }}
-  />
-  <button>Delete</button>
+  <input type="checkbox" checked={isComplete} on:click={handleCheckbox} />
+  <input type="text" value={task} on:input={handleInput} />
+  <button on:click={handleDelete}>Delete</button>
 </div>
 
 <style>

@@ -3,13 +3,18 @@
   import supabase from '$lib/db.js'
   import Header from '$lib/Header.svelte'
   import Todos from '$lib/Todos.svelte'
+  import AddNew from '$lib/AddNew.svelte'
   import Error from '$lib/Error.svelte'
 
   let todos = []
   let errorMsg = ''
+  let newTodo = ''
 
   const loadTodos = async () => {
-    let { data, error } = await supabase.from('todos').select('*')
+    let { data, error } = await supabase
+      .from('todos')
+      .select('*')
+      .order('id', { ascending: true })
 
     error && (errorMsg = error.message)
 
@@ -17,18 +22,46 @@
   }
 
   const updateTodo = async todo => {
-    try {
-      // const { data, error } = await supabase
-      //   .from('todos')
-      //   .update({ task: todo.task })
-      //   .eq('id', todo.id)
-      await supabase.from('todos').update({ task: todo.task }).eq('id', todo.id)
-    } catch (err) {
-      console.error('my', err)
-    }
+    const { data, error } = await supabase
+      .from('todos')
+      .update({ task: todo.task })
+      .eq('id', todo.id)
+
+    error && (errorMsg = error.message)
   }
 
-  setContext('update', updateTodo)
+  const updateChecked = async todo => {
+    const { data, error } = await supabase
+      .from('todos')
+      .update({ isComplete: todo.isComplete })
+      .eq('id', todo.id)
+
+    error && (errorMsg = error.message)
+  }
+
+  const deleteTodo = async todo => {
+    const { data, error } = await supabase
+      .from('todos')
+      .delete()
+      .eq('id', todo.id)
+
+    loadTodos()
+
+    error && (errorMsg = error.message)
+  }
+
+  const addTodo = async () => {
+    const { data, error } = await supabase
+      .from('todos')
+      .insert([{ task: newTodo }])
+
+    loadTodos()
+    newTodo = ''
+  }
+
+  setContext('updateTodo', updateTodo)
+  setContext('updateChecked', updateChecked)
+  setContext('deleteTodo', deleteTodo)
 </script>
 
 <Header />
@@ -41,6 +74,8 @@
   {#if !errorMsg}
     <Todos {todos} />
   {/if}
+
+  <AddNew bind:newTodo on:click={addTodo} />
 </main>
 
 <style>
