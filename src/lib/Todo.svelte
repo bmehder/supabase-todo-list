@@ -1,12 +1,23 @@
 <script>
+  import { getContext } from 'svelte'
+
   export let todo = {}
 
   const { task, isComplete } = todo
+
+  const updateTodo = getContext('update')
 </script>
 
 <div>
   <input type="checkbox" checked={isComplete} />
-  <input type="text" value={task} />
+  <input
+    type="text"
+    value={task}
+    on:input={e => {
+      todo.task = e.currentTarget.value
+      updateTodo(todo)
+    }}
+  />
   <button>Delete</button>
 </div>
 

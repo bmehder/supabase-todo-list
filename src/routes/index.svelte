@@ -1,4 +1,5 @@
 <script>
+  import { setContext } from 'svelte'
   import supabase from '$lib/db.js'
   import Header from '$lib/Header.svelte'
   import Todos from '$lib/Todos.svelte'
@@ -14,6 +15,20 @@
 
     todos = data
   }
+
+  const updateTodo = async todo => {
+    try {
+      // const { data, error } = await supabase
+      //   .from('todos')
+      //   .update({ task: todo.task })
+      //   .eq('id', todo.id)
+      await supabase.from('todos').update({ task: todo.task }).eq('id', todo.id)
+    } catch (err) {
+      console.error('my', err)
+    }
+  }
+
+  setContext('update', updateTodo)
 </script>
 
 <Header />
