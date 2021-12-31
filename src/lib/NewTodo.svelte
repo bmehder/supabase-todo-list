@@ -1,9 +1,16 @@
 <script>
-  export let newTodo = ''
+  import { createEventDispatcher } from 'svelte'
+  export let newTask = ''
+
+  const dispatch = createEventDispatcher()
+
+  const handleKeydown = e => e.key === 'Enter' && newTask && dispatch('enter')
 </script>
 
+<svelte:window on:keydown={handleKeydown} />
+
 <div>
-  <input type="text" bind:value={newTodo} placeholder="Add new todo..." />
+  <input type="text" bind:value={newTask} placeholder="Add new todo..." />
   <button on:click>Add Todo</button>
 </div>
 

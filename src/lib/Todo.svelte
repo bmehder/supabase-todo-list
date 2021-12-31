@@ -1,32 +1,33 @@
 <script>
   import { getContext } from 'svelte'
+  import { scale } from 'svelte/transition'
 
   export let todo = {}
 
   const { task, isComplete } = todo
 
-  const updateTask = getContext('updateTask')
-  const updateChecked = getContext('updateChecked')
+  const updateTodo = getContext('updateTodo')
   const deleteTodo = getContext('deleteTodo')
 
-  const handleInput = e => {
-    todo.task = e.currentTarget.value
-    updateTask(todo)
+  const handleUpdate = (e, input) => {
+    input === 'text' && (todo.task = e.currentTarget.value)
+    input === 'checkbox' && (todo.isComplete = e.currentTarget.checked)
+
+    updateTodo(todo)
   }
 
-  const handleCheckbox = e => {
-    todo.isComplete = e.currentTarget.checked ? true : false
-    updateChecked(todo)
-  }
-
-  const handleDelete = e => {
-    deleteTodo(todo)
-  }
+  const handleDelete = () => deleteTodo(todo)
 </script>
 
-<div>
-  <input type="checkbox" checked={isComplete} on:click={handleCheckbox} />
-  <input type="text" value={task} on:input={handleInput} />
+<div transition:scale>
+  <input
+    type="checkbox"
+    checked={isComplete}
+    on:change={e => handleUpdate(e, 'checkbox')}
+  />
+
+  <input type="text" value={task} on:input={e => handleUpdate(e, 'text')} />
+
   <button on:click={handleDelete}>Delete</button>
 </div>
 

@@ -3,12 +3,14 @@
   import supabase from '$lib/db.js'
   import Header from '$lib/Header.svelte'
   import Todos from '$lib/Todos.svelte'
-  import AddNew from '$lib/AddNew.svelte'
+  import NewTodo from '$lib/NewTodo.svelte'
   import Error from '$lib/Error.svelte'
+  import Spinner from '$lib/Spinner.svelte'
 
   let todos = []
   let errorMsg = ''
-  let newTodo = ''
+  let newTask = ''
+  let isLoading = true
 
   const handleError = error => (errorMsg = error.message)
 
@@ -20,22 +22,25 @@
 
     error && handleError(error)
 
+    isLoading = false
     todos = data
   }
 
-  const updateTask = async todo => {
+  const addTodo = async () => {
     const { data, error } = await supabase
       .from('todos')
-      .update({ task: todo.task })
-      .eq('id', todo.id)
+      .insert([{ task: newTask }])
+
+    newTask = ''
+    loadTodos()
 
     error && handleError(error)
   }
 
-  const updateChecked = async todo => {
+  const updateTodo = async todo => {
     const { data, error } = await supabase
       .from('todos')
-      .update({ isComplete: todo.isComplete })
+      .update({ task: todo.task, isComplete: todo.isComplete })
       .eq('id', todo.id)
 
     error && handleError(error)
@@ -52,34 +57,26 @@
     error && handleError(error)
   }
 
-  const addTodo = async () => {
-    const { data, error } = await supabase
-      .from('todos')
-      .insert([{ task: newTodo }])
-
-    newTodo = ''
-    loadTodos()
-
-    error && handleError(error)
-  }
-
-  setContext('updateTask', updateTask)
-  setContext('updateChecked', updateChecked)
+  setContext('updateTodo', updateTodo)
   setContext('deleteTodo', deleteTodo)
 </script>
 
 <Header />
 
 <main use:loadTodos>
+  {#if isLoading}
+    <Spinner />
+  {/if}
+
   {#if errorMsg}
     <Error {errorMsg} />
   {/if}
 
   {#if !errorMsg}
-    <Todos {todos} />
+    <Todos {todos} {isLoading} />
   {/if}
 
-  <AddNew bind:newTodo on:click={addTodo} />
+  <NewTodo bind:newTask on:click={addTodo} on:enter={addTodo} />
 </main>
 
 <style>
