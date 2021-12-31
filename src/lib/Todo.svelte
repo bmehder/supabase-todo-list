@@ -9,9 +9,9 @@
   const updateTodo = getContext('updateTodo')
   const deleteTodo = getContext('deleteTodo')
 
-  const handleUpdate = (e, input) => {
-    input === 'text' && (todo.task = e.currentTarget.value)
-    input === 'checkbox' && (todo.isComplete = e.currentTarget.checked)
+  const handleUpdate = (e, inputType) => {
+    inputType === 'text' && (todo.task = e.currentTarget.value)
+    inputType === 'checkbox' && (todo.isComplete = e.currentTarget.checked)
 
     updateTodo(todo)
   }
