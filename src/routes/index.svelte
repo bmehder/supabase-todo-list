@@ -10,24 +10,26 @@
   let errorMsg = ''
   let newTodo = ''
 
+  const handleError = error => (errorMsg = error.message)
+
   const loadTodos = async () => {
     let { data, error } = await supabase
       .from('todos')
       .select('*')
       .order('id', { ascending: true })
 
-    error && (errorMsg = error.message)
+    error && handleError(error)
 
     todos = data
   }
 
-  const updateTodo = async todo => {
+  const updateTask = async todo => {
     const { data, error } = await supabase
       .from('todos')
       .update({ task: todo.task })
       .eq('id', todo.id)
 
-    error && (errorMsg = error.message)
+    error && handleError(error)
   }
 
   const updateChecked = async todo => {
@@ -36,7 +38,7 @@
       .update({ isComplete: todo.isComplete })
       .eq('id', todo.id)
 
-    error && (errorMsg = error.message)
+    error && handleError(error)
   }
 
   const deleteTodo = async todo => {
@@ -47,7 +49,7 @@
 
     loadTodos()
 
-    error && (errorMsg = error.message)
+    error && handleError(error)
   }
 
   const addTodo = async () => {
@@ -55,11 +57,13 @@
       .from('todos')
       .insert([{ task: newTodo }])
 
-    loadTodos()
     newTodo = ''
+    loadTodos()
+
+    error && handleError(error)
   }
 
-  setContext('updateTodo', updateTodo)
+  setContext('updateTask', updateTask)
   setContext('updateChecked', updateChecked)
   setContext('deleteTodo', deleteTodo)
 </script>

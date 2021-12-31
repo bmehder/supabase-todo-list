@@ -5,13 +5,13 @@
 
   const { task, isComplete } = todo
 
-  const updateTodo = getContext('updateTodo')
+  const updateTask = getContext('updateTask')
   const updateChecked = getContext('updateChecked')
   const deleteTodo = getContext('deleteTodo')
 
   const handleInput = e => {
     todo.task = e.currentTarget.value
-    updateTodo(todo)
+    updateTask(todo)
   }
 
   const handleCheckbox = e => {
