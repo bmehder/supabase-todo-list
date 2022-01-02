@@ -64,24 +64,22 @@
   $: console.dir($user)
 </script>
 
-{#if $user}
-  <h4>Welcome {$user.email}</h4>
-{/if}
-
 <Header />
 
-<main use:loadTodos>
-  {#if isLoading}
-    <Spinner />
-  {/if}
+{#if $user}
+  <main use:loadTodos>
+    {#if isLoading}
+      <Spinner />
+    {/if}
 
-  {#if errorMsg}
-    <Error {errorMsg} />
-  {/if}
+    {#if errorMsg}
+      <Error {errorMsg} />
+    {/if}
 
-  {#if !errorMsg}
-    <Todos {todos} {isLoading} />
-  {/if}
+    {#if !errorMsg}
+      <Todos {todos} {isLoading} />
+    {/if}
 
-  <NewTodo bind:newTask on:click={addTodo} on:enter={addTodo} />
-</main>
+    <NewTodo bind:newTask on:click={addTodo} on:enter={addTodo} />
+  </main>
+{/if}
