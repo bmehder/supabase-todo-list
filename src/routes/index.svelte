@@ -1,5 +1,6 @@
 <script>
   import { setContext } from 'svelte'
+  import { user } from '$lib/stores'
   import supabase from '$lib/db.js'
   import Header from '$lib/Header.svelte'
   import Todos from '$lib/Todos.svelte'
@@ -59,7 +60,13 @@
 
   setContext('updateTodo', updateTodo)
   setContext('deleteTodo', deleteTodo)
+
+  $: console.dir($user)
 </script>
+
+{#if $user}
+  <h4>Welcome {$user.email}</h4>
+{/if}
 
 <Header />
 
@@ -78,13 +85,3 @@
 
   <NewTodo bind:newTask on:click={addTodo} on:enter={addTodo} />
 </main>
-
-<style>
-  main {
-    padding: 4rem 2rem;
-    background: white;
-    border-radius: 0.25em;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    text-align: center;
-  }
-</style>
