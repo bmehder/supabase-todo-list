@@ -1,7 +1,8 @@
 <script>
+  import supabase from '$lib/db.js'
   import { setContext } from 'svelte'
   import { user } from '$lib/stores'
-  import supabase from '$lib/db.js'
+
   import Header from '$lib/Header.svelte'
   import Todos from '$lib/Todos.svelte'
   import NewTodo from '$lib/NewTodo.svelte'
@@ -16,7 +17,7 @@
   const handleError = error => (errorMsg = error.message)
 
   const loadTodos = async () => {
-    let { data, error } = await supabase
+    const { data, error } = await supabase
       .from('todos')
       .select('*')
       .order('id', { ascending: true })
@@ -62,7 +63,7 @@
   setContext('updateTodo', updateTodo)
   setContext('deleteTodo', deleteTodo)
 
-  $: console.dir($user)
+  // $: console.dir($user)
 </script>
 
 <Header />

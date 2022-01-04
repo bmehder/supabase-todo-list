@@ -51,13 +51,16 @@
     <input type="email" bind:value placeholder="email@email.com" required />
   </div>
 
-  <button on:click={signUp}>Register</button>
-  <button on:click={login}>Login</button>
+  <div class="buttons">
+    <button on:click={signUp}>Register</button>
+    <button on:click={login}>Login</button>
+  </div>
 </main>
 
 <style>
   main {
     margin: 4rem;
+    padding: 4rem;
     font-size: 2rem;
   }
   input {
@@ -65,9 +68,27 @@
     margin: 1rem 0;
     padding: 1rem;
     font-size: initial;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  .buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
   }
   button {
+    display: block;
+    width: 100%;
     padding: 1rem 2rem;
+    background: dodgerblue;
+    color: white;
     font-size: initial;
+    border: none;
+    border-radius: 4px;
+    transition: background 100ms ease-in-out;
+  }
+  button:hover {
+    background: hsl(210, 100%, 46%);
+    color: white;
   }
 </style>

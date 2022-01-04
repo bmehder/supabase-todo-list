@@ -11,7 +11,7 @@
 <svelte:window on:keydown={handleKeydown} />
 
 <div>
-  <input type="text" bind:value={newTask} placeholder="Add new todo..." />
+  <input type="text" bind:value={newTask} placeholder="New todo..." />
   <button on:click>Add Todo</button>
 </div>
 
@@ -23,17 +23,24 @@
     gap: 1rem;
     margin: 0 4rem;
   }
+  input::placeholder {
+    font-size: 1.2em;
+  }
   input,
   button {
     display: block;
     padding: 1rem;
+    text-align: center;
+    font-family: inherit;
+    font-size: 1rem;
   }
   button {
     background: dodgerblue;
     color: white;
     border: none;
     outline: none;
-    font-size: initial;
+    font-size: 1.2rem;
+    font-weight: bold;
     transition: background 100ms ease-in-out;
   }
   button:hover {

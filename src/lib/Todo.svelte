@@ -19,7 +19,14 @@
   const handleDelete = () => deleteTodo(todo)
 </script>
 
-<div transition:scale>
+<svelte:head
+  ><link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+  /></svelte:head
+>
+
+<div transition:scale={{ delay: 0 }}>
   <input
     type="checkbox"
     checked={isComplete}
@@ -28,24 +35,26 @@
 
   <input type="text" value={task} on:input={e => handleUpdate(e, 'text')} />
 
-  <button on:click={handleDelete}>Delete</button>
+  <button on:click={handleDelete}><i class="fas fa-trash-alt" /></button>
 </div>
 
 <style>
   div {
     display: flex;
     gap: 1rem;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 0.5em;
+    padding: 0 4rem;
   }
   input {
+    width: 100%;
     padding: 1rem;
     font-size: initial;
   }
   input[type='checkbox'] {
-    width: 2rem;
-    height: 2rem;
+    width: 4rem;
+    height: 4rem;
   }
   button {
     padding: 1rem 2rem;

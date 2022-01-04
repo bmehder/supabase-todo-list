@@ -4,14 +4,14 @@
   div,
   div:before,
   div:after {
-    background: #8e5ea2;
+    background: dodgerblue;
     -webkit-animation: load1 1s infinite ease-in-out;
     animation: load1 1s infinite ease-in-out;
     width: 1em;
     height: em;
   }
   div {
-    color: #8e5ea2;
+    color: dodgerblue;
     text-indent: -9999em;
     margin: 88px auto;
     position: relative;
