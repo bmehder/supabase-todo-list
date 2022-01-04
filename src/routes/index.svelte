@@ -30,12 +30,13 @@
   const addTodo = async () => {
     const { data, error } = await supabase
       .from('todos')
-      .insert([{ task: newTask }])
+      .insert([{ task: newTask, user_id: $user.id }])
 
     newTask = ''
-    loadTodos()
 
     error && handleError(error)
+
+    !error && loadTodos()
   }
 
   const updateTodo = async todo => {
@@ -53,9 +54,9 @@
       .delete()
       .eq('id', todo.id)
 
-    loadTodos()
-
     error && handleError(error)
+
+    !error && loadTodos()
   }
 
   setContext('updateTodo', updateTodo)

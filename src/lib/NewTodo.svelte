@@ -1,5 +1,6 @@
 <script>
   import { createEventDispatcher } from 'svelte'
+
   export let newTask = ''
 
   const dispatch = createEventDispatcher()
