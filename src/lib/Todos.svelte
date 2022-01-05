@@ -4,7 +4,7 @@
   export let todos = []
   export let isLoading = false
 
-  $: isTodos = todos.length !== 0
+  $: isTodos = todos?.length !== 0
 </script>
 
 <section>

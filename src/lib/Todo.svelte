@@ -1,4 +1,5 @@
 <script>
+  import supabase from '$lib/db.js'
   import { getContext } from 'svelte'
   import { scale } from 'svelte/transition'
 
@@ -6,8 +7,23 @@
 
   const { task, isComplete } = todo
 
-  const updateTodo = getContext('updateTodo')
-  const deleteTodo = getContext('deleteTodo')
+  const loadTodos = getContext('loadTodos')
+
+  const updateTodo = async todo => {
+    const { data, error } = await supabase
+      .from('todos')
+      .update({ task: todo.task, isComplete: todo.isComplete })
+      .eq('id', todo.id)
+  }
+
+  const deleteTodo = async todo => {
+    const { data, error } = await supabase
+      .from('todos')
+      .delete()
+      .eq('id', todo.id)
+
+    !error && loadTodos()
+  }
 
   const handleUpdate = (e, inputType) => {
     inputType === 'text' && (todo.task = e.currentTarget.value)

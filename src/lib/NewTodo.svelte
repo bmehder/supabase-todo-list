@@ -1,18 +1,33 @@
 <script>
-  import { createEventDispatcher } from 'svelte'
+  import supabase from '$lib/db.js'
+  import { getContext } from 'svelte'
+  import { user } from '$lib/stores'
 
-  export let newTask = ''
+  let newTask = ''
 
-  const dispatch = createEventDispatcher()
+  const loadTodos = getContext('loadTodos')
+  const handleError = getContext('handleError')
 
-  const handleKeydown = e => e.key === 'Enter' && newTask && dispatch('enter')
+  const addTodo = async () => {
+    const { data, error } = await supabase
+      .from('todos')
+      .insert([{ task: newTask, user_id: $user.id }])
+
+    newTask = ''
+
+    error && handleError(error)
+
+    !error && loadTodos()
+  }
+
+  const handleKeydown = e => e.key === 'Enter' && newTask && addTodo()
 </script>
 
 <svelte:window on:keydown={handleKeydown} />
 
 <div>
   <input type="text" bind:value={newTask} placeholder="New todo..." />
-  <button on:click>Add Todo</button>
+  <button on:click={addTodo}>Add Todo</button>
 </div>
 
 <style>

@@ -1,15 +1,18 @@
 <script>
   import { goto } from '$app/navigation'
   import { user } from '$lib/stores'
+  import { getContext } from 'svelte'
   import supabase from '$lib/db.js'
   import Error from '$lib/Error.svelte'
+
+  const handleError = getContext('handleError')
 
   let errorMsg = ''
 
   const logout = async () => {
     const { error } = await supabase.auth.signOut()
 
-    error && (errorMsg = error)
+    error && handleError(error)
 
     if (!error) {
       user.set(false)

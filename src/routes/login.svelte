@@ -1,6 +1,6 @@
 <script>
-  import { goto } from '$app/navigation'
   import supabase from '$lib/db.js'
+  import { goto } from '$app/navigation'
   import { user } from '$lib/stores'
 
   import Error from '$lib/Error.svelte'
@@ -10,19 +10,24 @@
 
   const handleError = error => (errorMsg = error.message)
 
-  const signUp = async () => {
-    let { user: userDetails, error } = await supabase.auth.signUp({
-      email: value,
-      password: 'TfLvCMfmxASMxFLWpKkM',
-    })
-
+  const handleAfterLogin = (userDetails, error) => {
     if (error) {
       handleError(error)
       return
     }
 
     $user = userDetails
-    goto('/')
+
+    !error && goto('/')
+  }
+
+  const signUp = async () => {
+    let { user: userDetails, error } = await supabase.auth.signUp({
+      email: value,
+      password: 'TfLvCMfmxASMxFLWpKkM',
+    })
+
+    handleAfterLogin(userDetails, error)
   }
 
   const login = async () => {
@@ -31,13 +36,7 @@
       password: 'TfLvCMfmxASMxFLWpKkM',
     })
 
-    if (error) {
-      handleError(error)
-      return
-    }
-
-    $user = userDetails
-    goto('/')
+    handleAfterLogin(userDetails, error)
   }
 </script>
 
