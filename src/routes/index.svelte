@@ -8,11 +8,15 @@
   import NewTodo from '$lib/NewTodo.svelte'
   import Error from '$lib/Error.svelte'
   import Spinner from '$lib/Spinner.svelte'
+  import { goto } from '$app/navigation'
+  import { browser } from '$app/env'
 
   let todos = []
   let errorMsg = ''
   let newTask = ''
   let isLoading = true
+
+  browser && $user === false && goto('/login')
 
   const handleError = error => (errorMsg = error.message)
 
