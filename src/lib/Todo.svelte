@@ -67,4 +67,10 @@
   button:hover {
     background: hsl(210, 100%, 46%);
   }
+  @media screen and (max-width: 600px) {
+    div {
+      width: 100%;
+      padding: 0 1rem;
+    }
+  }
 </style>

@@ -91,4 +91,11 @@
     background: hsl(210, 100%, 46%);
     color: white;
   }
+  @media screen and (max-width: 600px) {
+    main {
+      width: 100%;
+      margin: 4rem 0;
+      padding: 4rem;
+    }
+  }
 </style>

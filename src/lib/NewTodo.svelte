@@ -46,4 +46,13 @@
   button:hover {
     background: hsl(210, 100%, 46%);
   }
+  @media screen and (max-width: 600px) {
+    div {
+      margin: 0 2rem 2rem;
+    }
+    input,
+    button {
+      padding: 1rem;
+    }
+  }
 </style>

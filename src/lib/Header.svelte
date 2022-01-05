@@ -68,4 +68,9 @@
     background: hsl(210, 100%, 20%);
     color: white;
   }
+  @media screen and (max-width: 600px) {
+    header {
+      padding: 0 2rem;
+    }
+  }
 </style>

@@ -5,3 +5,11 @@ main {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   text-align: center;
 }
+
+@media screen and (max-width: 600px) {
+  main {
+    width: 100%;
+    margin: 4rem 0;
+    padding: 0 0 1rem;
+  }
+}

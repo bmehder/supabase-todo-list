@@ -23,4 +23,10 @@
   p {
     margin-bottom: 1rem;
   }
+  @media screen and (max-width: 600px) {
+    section {
+      width: 100%;
+      padding: 2rem 1rem;
+    }
+  }
 </style>
