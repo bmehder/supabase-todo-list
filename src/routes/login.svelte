@@ -1,7 +1,7 @@
 <script>
   import supabase from '$lib/db.js'
   import { user } from '$lib/stores'
-
+  import { goto } from '$app/navigation'
   import Error from '$lib/Error.svelte'
 
   let username = ''
