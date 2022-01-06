@@ -2,7 +2,7 @@
   import supabase from '$lib/db.js'
   import { user } from '$lib/stores'
   import { goto } from '$app/navigation'
-  import { browser } from '$app/env'
+  // import { browser } from '$app/env'
   import { setContext } from 'svelte'
 
   import Header from '$lib/Header.svelte'
@@ -15,7 +15,7 @@
   let isLoading = true
   let errorMsg = ''
 
-  browser && $user === false && goto('/login')
+  // browser && $user === false && goto('/login')
 
   const handleError = error => (errorMsg = error.message)
 
@@ -54,4 +54,8 @@
 
     <NewTodo />
   </main>
+{/if}
+
+{#if !$user}
+  <button on:click={() => goto('/login')}>Login</button>
 {/if}
