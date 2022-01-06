@@ -9,7 +9,7 @@
 
 <section>
   {#if !isTodos && !isLoading}
-    <p>No Todos ❌</p>
+    <p>Add some todos</p>
   {/if}
 
   {#if isTodos}
