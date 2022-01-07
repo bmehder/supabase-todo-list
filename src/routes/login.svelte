@@ -55,6 +55,8 @@
 
     !error && (message = 'Check your inbox (and spam folder)')
   }
+
+  $: console.log($user)
 </script>
 
 <main>
