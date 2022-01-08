@@ -1,5 +1,6 @@
 <script>
   import supabase from '$lib/db.js'
+  import { user } from '$lib/stores'
 
   let username = ''
   let password = ''
@@ -25,6 +26,8 @@
       isPasswordChanged = true
     }
   }
+
+  $: console.log($user)
 </script>
 
 <main>
@@ -50,7 +53,7 @@
 
     {#if isPasswordChanged}
       <p>{message}</p>
-      <a href="/">Go to your todo list.</a>
+      <a href="/login">Go to login.</a>
     {/if}
   </form>
 </main>

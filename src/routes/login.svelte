@@ -47,7 +47,7 @@
     let { data, error } = await supabase.auth.api.resetPasswordForEmail(
       username,
       {
-        redirectTo: '/change-password',
+        redirectTo: 'http://localhost:3000/change-password',
       }
     )
 
